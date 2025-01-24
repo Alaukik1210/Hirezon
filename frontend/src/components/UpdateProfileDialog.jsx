@@ -6,11 +6,11 @@ import { Loader2 } from 'lucide-react';
 import { useDispatch, useSelector } from 'react-redux';
 import { USER_API_END_POINT } from './utils/constant';
 import axios from 'axios';
-import { setUser } from '../redux/authSlice';
+import { setLoading, setUser } from '../redux/authSlice';
 import { toast } from 'sonner';
 const UpdateProfileDialog = ({ open, setOpen }) => {
-  const [loading, setLoading] = useState(false);
-  const { user } = useSelector(store => store.auth);
+  // const [loading, setLoading] = useState(false);
+  const { user,loading } = useSelector(store => store.auth);
 
   const [input, setInput] = useState({
     fullname: user?.fullname,
@@ -38,6 +38,7 @@ const UpdateProfileDialog = ({ open, setOpen }) => {
       formData.append("file", input.file)
     }
     try {
+      dispatch(setLoading(true));
       const token = localStorage.getItem("token");
       console.log("Token from frontend", token)
       const res = await axios.post(`${USER_API_END_POINT}/profile/update`, formData, {
@@ -47,6 +48,7 @@ const UpdateProfileDialog = ({ open, setOpen }) => {
         },
       });
       if (res.data.success) {
+        
         dispatch(setUser(res.data.user));
         toast.success(res.data.message);
       }
@@ -54,6 +56,9 @@ const UpdateProfileDialog = ({ open, setOpen }) => {
     } catch (error) {
       console.log('This is error', error);
       toast.error(error.response.data.message)
+
+    }finally{
+      dispatch(setLoading(false));
 
     }
     setOpen(false);
@@ -138,7 +143,7 @@ const UpdateProfileDialog = ({ open, setOpen }) => {
             </div>
             <DialogFooter>
               {
-                loading ? <Button className="w-full my-4"> <Loader2 className='mr-2 h-4 w-4 animate-spin' /> Please Wait</Button> : <Button type="submit" className="w-full my-4">
+                loading ? <Button  className="w-full my-4"> <Loader2 className='mr-2 h-4 w-4 animate-spin' /> Please Wait</Button> : <Button type="submit" className="w-full my-4">
                   Update
                 </Button>
               }
