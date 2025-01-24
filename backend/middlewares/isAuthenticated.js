@@ -4,7 +4,8 @@ const isAuthenticated = async (req, res, next) => {
   try {
     const token = req?.headers?.authorization;
     const headers = req.headers.authorization;
-    console.log("Headers", headers)
+    console.log("Headers aauth", headers)
+    console.log("token auth", token)
     if (!token) {
       return res.status(401).json({
         message: "User not authenticated",

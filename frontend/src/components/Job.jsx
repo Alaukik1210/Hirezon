@@ -5,10 +5,10 @@ import { Avatar, AvatarImage } from './ui/avatar';
 import { Badge } from './ui/badge';
 import { useNavigate } from 'react-router-dom';
 
-const Job = () => {
+const Job = ({job}) => {
 
   const navigate = useNavigate();
-  const jobId = "ieoskfes"
+  // const jobId = "ieoskfes"
   return (
     <div className="p-5 rounded-md shadow-xl bg-white border border-gray-100">
       {/* Header: Posted Time and Bookmark */}
@@ -27,35 +27,35 @@ const Job = () => {
           </Avatar>
         </Button>
         <div>
-          <h1 className="font-medium text-lg">Placeholder Company</h1>
+          <h1 className="font-medium text-lg">{job?.company?.name}</h1>
           <p className="text-sm text-gray-500">India</p>
         </div>
       </div>
 
       {/* Job Title and Description */}
       <div>
-        <h1 className="font-bold text-lg my-2">Frontend Developer</h1>
+        <h1 className="font-bold text-lg my-2">{job.title}</h1>
         <p className="text-sm text-gray-600">
-          This is a brief description of the job role and its requirements.
+        { job.description}
         </p>
       </div>
 
       {/* Job Details */}
       <div className="flex items-center gap-2 mt-4">
         <Badge className="text-blue-700 font-bold" variant="ghost">
-          5 Positions
+          {job.position}
         </Badge>
         <Badge className="text-[#F83002] font-bold" variant="ghost">
-          Full-Time
+         {job.jobType}
         </Badge>
         <Badge className="text-[#7209b7] font-bold" variant="ghost">
-          20 LPA
+         Rs {job.salary} per month 
         </Badge>
       </div>
 
       {/* Action Buttons */}
       <div className="flex items-center gap-4 mt-4">
-        <Button onClick={()=>{navigate(`/JobDiscription/${jobId}`)}} variant="outline">Details</Button>
+        <Button onClick={()=>{navigate(`/JobDiscription/${job._id}`)}} variant="outline">Details</Button>
         <Button className="bg-[#7209b7] text-white">Save For Later</Button>
       </div>
     </div>
