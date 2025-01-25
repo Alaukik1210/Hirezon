@@ -11,7 +11,7 @@ export const applyJob = async (req, res) => {
                 success: false
             })
         };
-        // check if the user has already applied for the job
+        // check if the user has  applied already for the job
         const existingApplication = await Application.findOne({ job: jobId, applicant: userId });
 
         if (existingApplication) {
