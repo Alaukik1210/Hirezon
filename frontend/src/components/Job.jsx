@@ -9,16 +9,17 @@ const Job = ({job}) => {
 
   const navigate = useNavigate();
   // const jobId = "ieoskfes"
-  // const dayAgoFunction = (mongodbTime) => {
-  //   const createdAt = new Date(mongodbTime); // Convert MongoDB time to a Date object
-  //   if (isNaN(createdAt.getTime())) {
-  //     throw new Error("Invalid MongoDB time format");
-  //   }
+  const dayAgoFunction = (mongodbTime) => {
+    const createdAt = new Date(mongodbTime); // Convert MongoDB time to a Date object
+    if (isNaN(createdAt.getTime())) {
+      throw new Error("Invalid MongoDB time format");
+    }
   
-  //   const currentTime = new Date(); // Get the current time
-  //   const timeDifference = currentTime - createdAt; // Calculate the time difference in milliseconds
-  //   return Math.floor(timeDifference / (1000 * 60 * 60 * 24)); // Convert to days and round down
-  // };
+    const currentTime = new Date(); // Get the current time
+    const timeDifference = currentTime - createdAt; // Calculate the time difference in milliseconds
+    return Math.floor(timeDifference / (1000 * 60 * 60 * 24)); // Convert to days and round down
+  };
+  dayAgoFunction(job?.createdAt);
   console.log('message',job);
 
 
@@ -26,7 +27,7 @@ const Job = ({job}) => {
     <div className="p-5 rounded-md shadow-xl bg-white border border-gray-100">
       {/* Header: Posted Time and Bookmark */}
       <div className="flex items-center justify-between">
-        <p className="text-sm text-gray-500">{} days ago</p>
+        <p className="text-sm text-gray-500">{dayAgoFunction(job?.createdAt)=='0'?'today':`${dayAgoFunction(job?.createdAt)}days ago` } </p>
         <Button variant="outline" className="rounded-full" size="icon">
           <Bookmark />
         </Button>
