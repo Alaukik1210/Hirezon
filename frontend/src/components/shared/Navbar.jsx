@@ -45,6 +45,24 @@ const Navbar = () => {
         {/* Navbar Links */}
         <div className="flex items-center gap-12">
           <ul className="flex font-medium items-center gap-6">
+            {
+              user && user.role==="recruiter"?(
+                <>
+               
+              
+            
+            <li className="cursor-pointer hover:text-purple-600 transition-colors">
+            <Link to={"/jobs"}>Jobs
+            </Link>
+            </li>
+            <li className="cursor-pointer hover:text-purple-600 transition-colors">
+            <Link to={"/browse"}>Companies
+            </Link>
+            </li>
+                </>
+                
+              ):
+            <>
             <li className="cursor-pointer hover:text-purple-600 transition-colors">
               <Link to={"/"}>Home
               </Link>
@@ -58,6 +76,8 @@ const Navbar = () => {
             <Link to={"/browse"}>Browse
             </Link>
             </li>
+            </>
+}
           </ul>
 
           {/* Profile Popover */}
@@ -85,6 +105,7 @@ const Navbar = () => {
               className="w-80  p-4 bg-white shadow-lg outline-none  rounded-lg border border-gray-200"
               
             >
+              
                 <div className="flex  gap-4 " >
                 <div>
                 <Avatar className="cursor-pointer">
@@ -92,7 +113,6 @@ const Navbar = () => {
                   src={user?.profile?.profilePhoto}
                   alt="User Avatar"
                 />
-                {/* <AvatarFallback>CN</AvatarFallback> */}
               </Avatar>
                 </div>
                 <h3 className="font-medium">{user.fullname}</h3>
@@ -102,12 +122,19 @@ const Navbar = () => {
                 
                 <p className="text-sm text-muted-foreground ml-12">{user.role}</p>
               </div>
-                
-              <div>
-              <div className="flex mt-2">
+              {
+                user && user.role==="student" &&(
+                  <>
+                  <div className="flex mt-2">
                <User2/>
               <Button className='outline-none pb-4' variant="link"><Link to={"/profile"}>View Profile</Link></Button>
               </div>
+                  </>
+                )
+              }
+                
+              <div>
+              
               <div className="flex ">
                 <LogOut/>
               <Button onClick={logoutHandler} className='outline-none pb-4' variant="link">Logout</Button>
