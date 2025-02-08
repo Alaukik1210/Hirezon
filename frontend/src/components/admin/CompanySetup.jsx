@@ -8,14 +8,17 @@ import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 import { COMPANY_API_END_POINT } from "../utils/constant";
 import { toast } from "sonner";
-import { setLoading } from "../../redux/authSlice";
 import { useSelector } from "react-redux";
+// import useGetCompanyById from "../../hooks/useGetCompanyById";
 
 const CompanySetup = () => {
   const navigate = useNavigate();
-  const params = useParams;
+  const params = useParams();
+  // useGetCompanyById(params.id);
   const [loading, setLoading] = useState(false);
-  const {singleCompany} = useSelector(store=>store.company);
+ const singleCompany = useSelector(store=>store.company.singleCompany)
+  console.log(singleCompany)
+
   const [input, setInput] = useState({
     name: "",
     description: "",
@@ -33,15 +36,15 @@ const CompanySetup = () => {
 
   useEffect(()=>{
     setInput({
-      name: singleCompany.name ||"",
-      description:singleCompany.description || "",
-      website:singleCompany.website || "",
-      location:singleCompany.location || "",
+      name: singleCompany?.name ||"",
+      description:singleCompany?.description || "",                                                                              
+      website:singleCompany?.website || "",
+      location:singleCompany?.location || "",
       file: null,
     })
   },[singleCompany])
 
-  const submitHandler =async (e)=>{
+  const submitHandler =async ()=>{
     const token = localStorage.getItem("token");
     const formData = new FormData();
     formData.append("name",input.name);

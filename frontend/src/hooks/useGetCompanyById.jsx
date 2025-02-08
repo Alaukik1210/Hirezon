@@ -11,7 +11,7 @@ const useGetCompanyById = (companyID) => {
     const fetchSingleCompany = async () => {
       const token = localStorage.getItem("token");
       try {
-        const res = await axios.get(`${COMPANY_API_END_POINT}/get${companyID}`, {
+        const res = await axios.get(`${COMPANY_API_END_POINT}/get/${companyID}`, {
           withCredentials: true,
           headers: {
             "Content-Type": "multipart/form-data",
@@ -27,7 +27,7 @@ const useGetCompanyById = (companyID) => {
       }
     }
     fetchSingleCompany();
-  }, [dispatch]);
+  }, [companyID,dispatch]);
 };
 
 
